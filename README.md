@@ -26,6 +26,14 @@
 # sunucu güncelleme
 sudo apt-get update && sudo apt-get upgrade -y
 
+# nvm kullanarak nodejs yükleyelim 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm install 20
+nvm use 20
+npm install -g npm@latest
+
 # sonaric kurulumu
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/monk-io/sonaric-install/main/linux-install-sonaric.sh)"
 ````
@@ -41,13 +49,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/monk-io/sonaric-install/ma
 sudo apt update
 sudo apt upgrade sonaric
 sonaric node-info
-```
-```console
-# gerekli portlar
-sudo ufw allow 44003
-sudo ufw allow 44004
-sudo ufw allow 44005
-sudo ufw allow 44006
 ```
 
 ```console
@@ -66,7 +67,29 @@ sonaric identity-export -o node-ismi.identity
 # şifremizi girelim.
 ````
 
-> Yedekleme dosyası sunucumuzda - pc şarjı bitmek üzere onu daha sonra yazacağım veya pr atabilirsiniz.
+> Yedekleme dosyası sunucumuzda SFTP ( Dosya ) bağlantı uygulamaları ile yada Termius ( Mac - Windows - Telefon ) , Mobaxterm üzerinden indirebilirsiniz.
+
+Termius ise SFTP Girdiniz - Sunucunuzu seçtiniz sunucuzda bulunan xxxx.identy dosyasını sürükleyerek kendi bilgisayarınızda istediğiniz dosyaya kopyaladınız - indirdiniz.
+
+![image](https://github.com/ruesandora/Sonaric/assets/141464235/27431eba-c1a0-4dad-8dff-edf0ec429a70)
+
+
+> Yedekleme İçin  ( Site Üzerinden Ayarlarken Pub ID - Priv Key - Key - Key PW )
+
+Node ile pc'miz arasında tünel açacağız. 
+
+```console
+ssh -L 127.0.0.1:44003:127.0.0.1:44003 -L 127.0.0.1:44004:127.0.0.1:44004 -L 127.0.0.1:44005:127.0.0.1:44005 -L 127.0.0.1:44006:127.0.0.1:44006 user@your-vps-ip
+```
+
+User - Ve İp Adresini sunucunuza göre ayarlayıp CMD'ye yapıştırın ve sunucunuza girin. CMD Açık Kaldığı sürece tunel aktif olacaktır. 
+
+Tarayıcınızdan : http://localhost:44004/ - Adresine Gidin - Nodenizin puanını - sıralamanızı göreceksiniz. 
+
+Orta sağ üst ayarlar butonu olacak Tıklayın - Export Butonuna tıklayın - Şifrenizi ayarlayın ve onaylayın artık size keylerinizi verecektir. Kaydedin ardından save to json file dosyasını basarakta json halini bilgisayarına kaydedin.
+
+![image](https://github.com/ruesandora/Sonaric/assets/141464235/2a2c9b7b-e75c-4c8f-ada4-1559c13af1c0)
+
 
 #
 
